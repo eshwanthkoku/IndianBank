@@ -1,8 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<IndianBank.Models.AccountDetailsViewModel>
+@{
+    ViewData["Title"] = "Dashboard";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Dashboard</h2>
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>Please <a href="@Url.Action("Login", "Account")">login</a> or <a href="@Url.Action("Signup", "Account")">sign up</a>.</p>
+}
+else
+{
+    <h4>Your accounts</h4>
+    <ul>
+        @foreach (var a in Model)
+        {
+            <li>@a.AccountId — Balance: @a.Balance ----- AccoountType: @a.AccountType</li>
+        }
+    </ul>
+}

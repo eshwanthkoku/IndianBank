@@ -1,4 +1,5 @@
 using IndianBank.EntityModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,13 @@ builder.Services.AddControllersWithViews();
 var data = builder.Configuration.GetConnectionString("BankingConnection");
 builder.Services.AddDbContext<BankingDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BankingConnection")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
+    AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    });
 
 var app = builder.Build();
 
@@ -31,7 +39,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}")
+    pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

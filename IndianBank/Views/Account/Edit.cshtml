@@ -1,0 +1,17 @@
+﻿@model IndianBank.Models.UserViewModel
+@{
+    ViewData["Title"] = "Edit profile";
+}
+<h2>Edit profile</h2>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label"></label>
+        <input asp-for="FullName" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="PasswordHash" class="form-label"></label>
+        <input asp-for="PasswordHash" class="form-control" />
+    </div>
+    <button class="btn btn-primary">Save</button>
+</form>

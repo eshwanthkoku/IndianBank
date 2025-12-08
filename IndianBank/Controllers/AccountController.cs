@@ -47,6 +47,18 @@ namespace IndianBank.Controllers
             _dbCotext.Users.Add(user);
             await _dbCotext.SaveChangesAsync();
 
+            var accountId = _dbCotext.AccountDetails.OrderByDescending(x => x.AccountId).FirstOrDefault().AccountId + 1;
+            var account = new AccountDetail
+            {
+                AccountId = accountId,
+                UserId = userId,
+                Balance = 5000m,
+                AccountTypeId = 1
+            };
+
+            _dbCotext.AccountDetails.Add(account);
+            await _dbCotext.SaveChangesAsync();
+
             return RedirectToAction("Login");
         }
 

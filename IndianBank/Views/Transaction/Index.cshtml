@@ -1,0 +1,46 @@
+﻿@model IEnumerable<IndianBank.EntityModel.Transaction>
+@{
+    ViewData["Title"] = "Transactions";
+    var accounts = ViewBag.Accounts as List<IndianBank.EntityModel.AccountDetail>;
+}
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>Please <a href="@Url.Action("Login", "Account")">login</a> or <a href="@Url.Action("Signup", "Account")">sign up</a>.</p>
+}
+else
+{
+    <h2>Transactions</h2>
+    <div class="mb-3">
+        <a class="btn btn-success" href="@Url.Action("Deposit")">Deposit</a>
+        <a class="btn btn-warning" href="@Url.Action("Withdraw")">Withdraw</a>
+        <a class="btn btn-info" href="@Url.Action("Transfer")">Transfer</a>
+    </div>
+
+    <h4>Your Accounts</h4>
+    <ul>
+        @foreach (var a in accounts)
+        {
+            <li>@a.AccountId — Balance: @a.Balance</li>
+        }
+    </ul>
+
+    <h4>Recent Transactions</h4>
+    <table class="table">
+        <thead>
+            <tr><th>Id</th><th>From</th><th>To</th><th>Amount</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@t.TransactionId</td>
+                    <td>@t.FromAccountId</td>
+                    <td>@t.ToAccountId</td>
+                    <td>@t.Amount</td>
+                    <td>@t.TransactionDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
